@@ -1,0 +1,12 @@
+version: '3'
+services:
+  code-server:
+    image: codercom/code-server:latest
+    container_name: code-server
+    user: root
+    volumes:
+      - ./.config:/root/.config
+      # - /data:/home/coder/project
+    ports:
+      - 127.0.0.1:8080:8080
+
