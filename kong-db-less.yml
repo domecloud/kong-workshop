@@ -1,35 +1,14 @@
 version: '3.8'
 
 services:
-  kong-database:
-    image: postgres:${POSTGRES_VERSION:-latest}
-    container_name: kong-database
-    environment:
-      - POSTGRES_USER=${POSTGRES_USER:-kong}
-      - POSTGRES_DB=${POSTGRES_DB:-kong}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-kong}
-    volumes:
-      - ./pg_data:/var/lib/postgresql/data
-    restart: always
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
-      interval: 5s
-      timeout: 5s
-      retries: 5
-
   kong:
-    depends_on:
-      - kong-database
     image: kong:${KONG_VERSION:-latest}
     container_name: kong
     restart: always
     environment:
       - TZ=${TZ:-Asia/Bangkok}
-      - KONG_DATABASE=postgres
-      - KONG_PG_HOST=${KONG_PG_HOST:-kong-database}
-      - KONG_PG_DATABASE=${POSTGRES_DB:-kong}
-      - KONG_PG_USER=${POSTGRES_USER:-kong}
-      - KONG_PG_PASSWORD=${POSTGRES_PASSWORD:-kong}
+      - KONG_DATABASE=off
+      - KONG_DECLARATIVE_CONFIG=/etc/kong/conf/kong.yml
       - KONG_ADMIN_LISTEN=${KONG_ADMIN_LISTEN:-127.0.0.1:8001}
       - KONG_PROXY_LISTEN=${KONG_PROXY_LISTEN:-0.0.0.0:8000, 0.0.0.0:8443 ssl http2}
       - KONG_NGINX_HTTP_RESOLVER=${KONG_NGINX_HTTP_RESOLVER:-8.8.8.8}
@@ -41,6 +20,8 @@ services:
       - KONG_TRACING_INSTRUMENTATIONS=all
       - KONG_TRACING_SAMPLING_RATE=1.0
       - KONG_LOG_LEVEL=debug
+    volumes:
+      - ./conf:/etc/kong/conf
     ports:
       - 80:8000
       - 443:8443 

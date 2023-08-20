@@ -1,0 +1,21 @@
+version: '3.8'
+services:
+  jaeger-collector:
+    # image: jaegertracing/jaeger-collector:latest
+    image: jaegertracing/all-in-one:1.47
+    container_name: jaeger-collector
+    restart: always
+    environment:
+      - COLLECTOR_ZIPKIN_HOST_PORT=:9411
+      - COLLECTOR_OTLP_ENABLED=true
+      - SPAN_STORAGE_TYPE=opensearch
+      - ES_TAGS_AS_FIELDS_ALL=true
+      - ES_USERNAME=admin
+      - ES_PASSWORD=admin
+      - ES_TLS_SKIP_HOST_VERIFY=true
+    command:
+      - --es.server-urls=https://opensearch:9200
+      - --es.tls.enabled=true
+      - --log-level=debug
+    ports:
+      - 16686:16686

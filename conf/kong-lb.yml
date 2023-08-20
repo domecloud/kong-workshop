@@ -1,0 +1,19 @@
+_format_version: '1.1'
+
+services:
+- name: api-lb
+  url: http://api-lb/
+  routes:
+  - name: api-lb-route
+    paths:
+    - /
+
+upstreams:
+- name: api-lb
+  targets:
+  - target: api1:8000
+    weight: 100
+  - target: api2:8000
+    weight: 100
+  - target: api3:8000
+    weight: 100

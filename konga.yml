@@ -1,4 +1,4 @@
-version: '3.7'
+version: '3.8'
 services:
   # https://github.com/pantsel/konga/issues/462#issuecomment-633209833
   konga:

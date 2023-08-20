@@ -1,0 +1,8 @@
+_format_version: "1.1"
+services:
+- name: api1
+  url: http://api1:80/
+  routes:
+  - name: api1-route
+    paths:
+    - "/"
