@@ -1,5 +1,4 @@
-version: '3.8'
-
+# mkdir -p grafana_data prometheus_data tempo-data && chown -R 472:472 grafana_data && chown -R 65534:65534 prometheus_data && chown -R 10001:10001 tempo-data
 services:
   kong-database:
     image: postgres:${POSTGRES_VERSION:-latest}
@@ -45,7 +44,7 @@ services:
       - KONG_LOG_LEVEL=debug
     ports:
       - 80:8000
-      - 443:8443 
+      - 443:8443
       - 127.0.0.1:8001:8001
       - 127.0.0.1:8002:8002
     healthcheck:
@@ -53,4 +52,8 @@ services:
       interval: 5s
       timeout: 2s
       retries: 5
-    
+  
+  httpbin:
+    image: kennethreitz/httpbin
+    container_name: httpbin
+    restart: always

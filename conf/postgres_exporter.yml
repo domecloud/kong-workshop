@@ -1,9 +1,0 @@
-auth_modules:
-  kong: # Set this to any name you want
-    type: userpass
-    userpass:
-      username: kong
-      password: kong
-    options:
-      # options become key=value parameters of the DSN
-      sslmode: disable
