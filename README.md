@@ -13,6 +13,7 @@ Blockchain & Scalable IT Solutions.
 
 ## Deploy Kong
 ```
+cp default.env .env
 docker compose up -d kong-database
 docker compose run --rm kong kong migrations
 docker compose up -d kong
