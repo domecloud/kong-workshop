@@ -1,6 +1,5 @@
 # mkdir -p grafana_data
 # chown -R 472.472 grafana_data
-version: '3.8'
 services:
   grafana:
     image: grafana/grafana:main
