@@ -1,9 +1,11 @@
 services:
   fluent-bit:
-    image: fluent/fluent-bit:2.1.8
+    image: fluent/fluent-bit:${FLUENTBIT_VERSION:-latest}
     container_name: fluent-bit
     restart: always
     # network_mode: host
+    command: [
+      "-c", "/conf/fluent-bit.yml"
+    ]
     volumes:
-    - ./conf/fluent-bit.conf:/fluent-bit/etc/fluent-bit.conf
-
+    - ./conf/fluent-bit.yml:/conf/fluent-bit.yml

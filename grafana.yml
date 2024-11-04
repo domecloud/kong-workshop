@@ -2,15 +2,16 @@
 # chown -R 472.472 grafana_data
 services:
   grafana:
-    image: grafana/grafana:main
+    image: grafana/grafana:${GRAFANA_VERSION:-main}
     restart: always
     container_name: grafana
     hostname: grafana
     # user: root
     environment:
       - GF_SERVER_ROOT_URL=https://grafana.example.com/
+      - GF_FEATURE_TOGGLES_ENABLE=traceqlEditor tempoSearch tempoBackendSearch tempoServiceGraph traceQLStreaming metricsSummary
     volumes:
       - ./grafana_data:/var/lib/grafana
     ports:
-      - 127.0.0.1:3000:3000
+      - 3000:3000
 

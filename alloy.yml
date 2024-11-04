@@ -1,0 +1,15 @@
+services:
+  alloy:
+    image: grafana/alloy:${ALLOY_VERSION:-latest}
+    container_name: alloy
+    restart: always
+    command: [
+      "run", "--server.http.listen-addr=0.0.0.0:12345",
+      "--storage.path=/alloy",
+      "/conf/config.alloy"
+    ]
+    volumes:
+    - ./conf/config.alloy:/conf/config.alloy
+    - ./alloy_data:/alloy
+    ports:
+    - 12345:12345

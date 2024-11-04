@@ -38,8 +38,8 @@ services:
       - KONG_TRUSTED_IPS=0.0.0.0/0,::/0
       - KONG_REAL_IP_RECURSIVE=on
       - KONG_REAL_IP_HEADER=Cf-Connecting-Ip
-      - KONG_TRACING_INSTRUMENTATIONS=all
-      - KONG_TRACING_SAMPLING_RATE=1.0
+      #- KONG_TRACING_INSTRUMENTATIONS=all
+      #- KONG_TRACING_SAMPLING_RATE=1.0
       - KONG_LOG_LEVEL=debug
     ports:
       - 80:8000

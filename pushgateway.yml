@@ -1,0 +1,9 @@
+services:
+  pushgateway:
+    image: prom/pushgateway:v1.10.0
+    container_name: pushgateway
+    restart: always
+    environment:
+      - TZ=Asia/Bangkok
+    ports:
+      - 9091:9091

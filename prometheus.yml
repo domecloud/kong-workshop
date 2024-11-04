@@ -1,19 +1,25 @@
 services:
   prometheus:
-    image: prom/prometheus
+    image: prom/prometheus:${PROMETHEUS_VERSION:-main}
     restart: always
     # network_mode: host
     container_name: prometheus
-    command:
-      - --config.file=/conf/prometheus.yml
-      - --storage.tsdb.retention=90d
-      - --web.listen-address=0.0.0.0:9090
-      - --web.enable-lifecycle
+    environment:
+      - TZ=Asia/Bangkok
+    command: [
+      "--config.file=/conf/prometheus.yml",
+      "--storage.tsdb.retention.time=90d",
+      "--enable-feature=exemplar-storage,native-histograms",
+      "--web.listen-address=0.0.0.0:9090",
+      "--web.enable-lifecycle",
+      "--web.enable-remote-write-receiver"
+    ]
+    
     volumes:
       - ./conf/prometheus.yml:/conf/prometheus.yml
       - ./prometheus_data:/prometheus
     ports:
-      - 127.0.0.1:9090:9090
+      - 9090:9090
 
 # Before start
 # mkdir -p prometheus_data
