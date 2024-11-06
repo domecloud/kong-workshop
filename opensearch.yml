@@ -5,6 +5,7 @@ services:
     restart: always
     # network_mode: host
     environment:
+      - OPENSEARCH_INITIAL_ADMIN_PASSWORD=Ple4s4Ch4ngeMe
       - cluster.name=opensearch
       - node.name=opensearch-01
       - discovery.type=single-node
