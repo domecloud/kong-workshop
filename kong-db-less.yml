@@ -23,8 +23,8 @@ services:
     ports:
       - 80:8000
       - 443:8443 
-      - 127.0.0.1:8001:8001
-      - 127.0.0.1:8002:8002
+      - 8001:8001
+      - 8002:8002
     healthcheck:
       test: ["CMD", "kong", "health"]
       interval: 5s

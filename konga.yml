@@ -9,8 +9,7 @@ services:
       # Konga creator said `I've done it with no problems on production environments.`
       # But the default `sails-disk` adapter is not designed for use as a production database;
       - NODE_ENV=development
-    ports:
-      - 127.0.0.1:1337:1337
     volumes:
       - ./konga_data:/app/kongadata
-
+    ports:
+      - 1337:1337

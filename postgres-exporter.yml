@@ -13,5 +13,5 @@ services:
     volumes:
       - ./conf/postgres_exporter.yml:/conf/postgres_exporter.yml
     ports:
-      - 127.0.0.1:9187:9187
+      - 9187:9187
 

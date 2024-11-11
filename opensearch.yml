@@ -23,7 +23,7 @@ services:
     volumes:
       - ./opensearch_data:/usr/share/opensearch/data
     ports:
-      - 127.0.0.1:9200:9200
+      - 9200:9200
 
   dashboard:
     image: opensearchproject/opensearch-dashboards:2
@@ -34,4 +34,4 @@ services:
       - OPENSEARCH_HOSTS=https://opensearch:9200
       # - SERVER_HOST=127.0.0.1
     ports:
-      - 127.0.0.1:5601:5601
+      - 5601:5601
