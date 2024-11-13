@@ -4,9 +4,17 @@ services:
     restart: always
     container_name: datadog
     hostname: docker-datadog
+    # pid: host
+    # cgroup: host
     environment:
       - DD_SITE=${DD_SITE:-127.0.0.1}
       - DD_API_KEY=${DD_API_KEY:-X}
       - DD_HOSTNAME=${DD_HOSTNAME:-datadog-docker}
       - DD_CONTAINER_EXCLUDE=*
       - DD_DOGSTATSD_NON_LOCAL_TRAFFIC=true
+    # volumes:
+    #   - /var/run/docker.sock:/var/run/docker.sock:ro
+    #   - /proc/:/host/proc/:ro
+    #   - /sys/fs/cgroup/:/host/sys/fs/cgroup:ro
+    # ports:
+    #   - 8125:8125/udp
