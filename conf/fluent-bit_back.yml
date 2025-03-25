@@ -1,0 +1,25 @@
+service:
+  flush: 5
+  daemon: off
+  log_level: info
+  # parsers_file: parsers.conf
+  http_server: off
+
+pipeline:
+  inputs:
+  - name: tcp
+    listen: 0.0.0.0
+    port: 5170
+    chunk_size: 32
+    buffer_size: 64
+    format: json
+    tag: kong
+
+  outputs:
+  - name: loki
+    match: kong
+    host: loki
+    port: 3100
+    labels: "app=kong, service_name=$service['name'], host=$request['headers']['host']"
+  - name: stdout
+    match: "*"
