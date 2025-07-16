@@ -1,15 +1,15 @@
 services:
   opensearch:
-    image: opensearchproject/opensearch:2
+    image: opensearchproject/opensearch:${OPENSEARCH_VERSION:-2.19.2}
     container_name: opensearch
     restart: always
     # network_mode: host
     environment:
-      - OPENSEARCH_INITIAL_ADMIN_PASSWORD=Ple4s4Ch4ngeMe
+      - OPENSEARCH_INITIAL_ADMIN_PASSWORD=${OPENSEARCH_INITIAL_ADMIN_PASSWORD:-Thiipha7gie5daiz} # change me
       - cluster.name=opensearch
       - node.name=opensearch-01
       - discovery.type=single-node
-      - bootstrap.memory_lock=true
+      # - bootstrap.memory_lock=true
       # - network.host=127.0.0.1,10.148.0.30
       - http.compression=true
       - "OPENSEARCH_JAVA_OPTS=-Xms2g -Xmx2g"
@@ -24,10 +24,15 @@ services:
       - ./opensearch_data:/usr/share/opensearch/data
     ports:
       - 9200:9200
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import socket; socket.create_connection(('127.0.0.1', 9200), 5)"]
+      interval: 10s
+      timeout: 10s
+      retries: 3
 
   dashboard:
-    image: opensearchproject/opensearch-dashboards:2
-    container_name: opennsearch-dashboard
+    image: opensearchproject/opensearch-dashboards:${OPENSEARCH_DASHBOARD_VERSION:-2.19.2}
+    container_name: opensearch-dashboard
     restart: always
     # network_mode: host
     environment:
@@ -35,3 +40,8 @@ services:
       # - SERVER_HOST=127.0.0.1
     ports:
       - 5601:5601
+    healthcheck:
+      test: ["CMD", "curl", "--fail", "http://127.0.0.1:5601"]
+      interval: 10s
+      timeout: 10s
+      retries: 3

@@ -14,3 +14,8 @@ services:
       - ./conf/loki.yml:/etc/loki/loki.yml
     ports:
       - 3100:3100
+    healthcheck:
+      test: ["CMD", "wget", "-qO", "/dev/null", "http://127.0.0.1:3100/metrics"]
+      interval: 10s
+      timeout: 10s
+      retries: 3

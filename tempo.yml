@@ -16,6 +16,11 @@ services:
       - "4318:4318"   # otlp http
       - "9411:9411"   # zipkin
     command: [ "-config.file=/conf/tempo.yml" ]
+    healthcheck:
+      test: ["CMD", "wget", "-qO", "/dev/null", "http://localhost:3200/metrics"]
+      interval: 10s
+      timeout: 10s
+      retries: 3
 
   memcached:
     image: memcached:${MEMCACHED_VERSION:-latest}
@@ -24,5 +29,9 @@ services:
     environment:
       - MEMCACHED_MAX_MEMORY=64m  # Set the maximum memory usage
       - MEMCACHED_THREADS=4       # Number of threads to use
-
+    healthcheck:
+      test: ["CMD", "echo", "version", "|", "nc", "-vn", "-w", "1", "127.0.0.1", "11211"]
+      interval: 10s
+      timeout: 10s
+      retries: 3
 # mkdir -p tempo_data && chown -R 10001:10001 tempo_data

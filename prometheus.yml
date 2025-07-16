@@ -20,6 +20,11 @@ services:
       - ./prometheus_data:/prometheus
     ports:
       - 9090:9090
+    healthcheck:
+      test: ["CMD", "wget", "-qO", "/dev/null", "http://localhost:9090/metrics"]
+      interval: 10s
+      timeout: 10s
+      retries: 3
 
 # Before start
 # mkdir -p prometheus_data

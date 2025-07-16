@@ -4,8 +4,11 @@ services:
     container_name: fluent-bit
     restart: always
     # network_mode: host
-    command: [
-      "-c", "/conf/fluent-bit.yml"
-    ]
+    command: -c /conf/fluent-bit.yml
     volumes:
     - ./conf/fluent-bit.yml:/conf/fluent-bit.yml
+    healthcheck:
+      test: ["CMD", "/fluent-bit/bin/fluent-bit", "--dry-run", "-c", "/conf/fluent-bit.yml"]
+      interval: 10s
+      timeout: 10s
+      retries: 3

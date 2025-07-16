@@ -1,6 +1,6 @@
 services:
   pushgateway:
-    image: prom/pushgateway:v1.10.0
+    image: prom/pushgateway:${PUSH_GATEWAY_VERSION:-v1.11.1}
     container_name: pushgateway
     restart: always
     environment:

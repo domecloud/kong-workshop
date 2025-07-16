@@ -7,4 +7,8 @@ services:
       - ./kuma_data:/app/data
     ports:
       - 3001:3001
-
+    healthcheck:
+      test: ["CMD", "extra/healthcheck"]
+      interval: 10s
+      timeout: 10s
+      retries: 3

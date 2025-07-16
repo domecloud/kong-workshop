@@ -1,7 +1,6 @@
 # https://karthiksdevopsengineer.medium.com/setting-up-elasticsearch-and-kibana-single-node-with-docker-compose-329776fa3aee
 # mkdir -p esdata kibanadata && chown -R 1000:1000 esdata kibanadata
 # openssl x509 -enddate -noout -in certs/ca/ca.crt
-version: "2.2"
 
 services:
   setup:
@@ -93,7 +92,7 @@ services:
       test:
         [
           "CMD-SHELL",
-          "curl -s --cacert config/certs/ca/ca.crt https://localhost:9200 | grep -q 'missing authentication credentials'",
+          "curl -s --cacert config/certs/ca/ca.crt https://127.0.0.1:9200 | grep -q 'missing authentication credentials'",
         ]
       interval: 10s
       timeout: 10s
@@ -124,17 +123,8 @@ services:
       test:
         [
           "CMD-SHELL",
-          "curl -s -I http://localhost:5601 | grep -q 'HTTP/1.1 302 Found'",
+          "curl -s -I http://127.0.0.1:5601 | grep -q 'HTTP/1.1 302 Found'",
         ]
       interval: 10s
       timeout: 10s
       retries: 120
-
-  fluent-bit:
-    image: fluent/fluent-bit:${FLUENTBIT_VERSION:-latest}
-    container_name: fluent-bit
-    restart: always
-    ports:
-      - 5170:5170
-    volumes:
-      - ./conf/fluent-bit.conf:/fluent-bit/etc/fluent-bit.conf

@@ -14,4 +14,8 @@ services:
       - ./conf/postgres_exporter.yml:/conf/postgres_exporter.yml
     ports:
       - 9187:9187
-
+    healthcheck:
+      test: ["CMD", "wget", "-qO", "/dev/null", "http://127.0.0.1:9187/metrics"]
+      interval: 10s
+      timeout: 10s
+      retries: 3

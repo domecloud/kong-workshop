@@ -13,3 +13,8 @@ services:
     - ./alloy_data:/alloy
     ports:
     - 12345:12345
+    healthcheck:
+      test: ["CMD", "perl", "-MIO::Socket::INET", "-e", "exit !IO::Socket::INET->new('127.0.0.1:12345')"]
+      interval: 10s
+      timeout: 10s
+      retries: 3
